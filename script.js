@@ -1,31 +1,91 @@
-function createPlayer(figure, color, name) {
-  return {
-    name,
-    figure,
-    color,
-    score: 0,
-    addScore() {
-      return ++this.score;
-    },
+const app = (() => {
+  // Containers
+  const startGameContainer = document.querySelector(`#start-game`);
+  const mainGameContainer = document.querySelector(`#main-game`);
+  const gameResultsContainer = document.querySelector(`#game-results`);
+
+  // Buttons
+  const startGameButton = document.querySelector(`#start-game-button`);
+  const resetButton = document.querySelector(`#reset-button`);
+
+  // User inputs
+  const playerOneNameInput = document.querySelector(`.player-one-input-name`);
+  const playerOneColorInput = document.querySelector(`.player-one-input-color`);
+  const playerOneFigureInput = document.querySelector(
+    `.player-one-input-figure`
+  );
+  const playerTwoNameInput = document.querySelector(`.player-two-input-name`);
+  const playerTwoColorInput = document.querySelector(`.player-two-input-color`);
+  const playerTwoFigureInput = document.querySelector(
+    `.player-two-input-figure`
+  );
+
+  const toggleResetButton = () => {
+    resetButton.classList.toggle("hidden");
   };
-}
 
-const dave = createPlayer("x", "green", "Dave");
-const john = createPlayer("o", "red", "John");
+  const toggleStartContainer = () => {
+    startGameContainer.classList.toggle("hidden");
+  };
+  const toggleGameContainer = () => {
+    mainGameContainer.classList.toggle("hidden");
+  };
+  const toggleResultsContainer = () => {
+    gameResultsContainer.classList.toggle("hidden");
+  };
 
-const game = ((player1, player2) => {
+  const createPlayer = (figure, color, name) => {
+    return {
+      name,
+      figure,
+      color,
+      score: 0,
+      addScore() {
+        return ++this.score;
+      },
+    };
+  };
+
+  startGameButton.addEventListener("click", () => {
+    const player1 = createPlayer(
+      playerOneFigureInput.value,
+      playerOneColorInput.value,
+      playerOneNameInput.value
+    );
+    const player2 = createPlayer(
+      playerTwoFigureInput.value,
+      playerTwoColorInput.value,
+      playerTwoNameInput.value
+    );
+    startGameContainer.classList.toggle("hidden");
+    toggleGameContainer();
+    game(player1, player2);
+  });
+
+  return {
+    toggleStartContainer,
+    toggleGameContainer,
+    toggleResultsContainer,
+    toggleResetButton,
+  };
+})();
+
+function game(player1, player2) {
+  // Remove me later
+  const resetButton = document.querySelector(`#reset-button`);
+  //
+  let gameBoard = new Array(9);
+  let counter = 0;
+
   // player 1 is true, player 2 is false
   const finishButton = document.querySelector(`#finish-button`);
-  const playerOneSymbol = player1.figure;
-  const playerTwoSymbol = player2.figure;
-  let gameBoard = new Array(9);
-  const container = document.querySelector("#gameboard");
-  let counter = 0;
+  const gameboardContainer = document.querySelector("#gameboard");
   const gameInfo = document.querySelector(`#game-info`);
-  const resetButton = document.querySelector(`#reset-button`);
+
   let resetActivated = false;
   const player1score = document.querySelector(`#player-two-section > .score`);
   const player2score = document.querySelector(`#player-one-section > .score`);
+  const restartButton = document.querySelector(`#restart-button`);
 
   const addUnit = (id, bool) => {
     gameBoard[id] = bool;
@@ -34,8 +94,8 @@ const game = ((player1, player2) => {
 
   const displayUnit = (cell, bool) => {
     bool
-      ? (cell.textContent = playerOneSymbol)
-      : (cell.textContent = playerTwoSymbol);
+      ? (cell.textContent = player1.figure)
+      : (cell.textContent = player2.figure);
   };
 
   const evaluateDiagonally = () => {
@@ -119,6 +179,7 @@ const game = ((player1, player2) => {
       return undefined;
     }
   };
+
   const evaluateBoard = () => {
     if (evaluateDiagonally() !== undefined) {
       return evaluateDiagonally();
@@ -135,8 +196,18 @@ const game = ((player1, player2) => {
     return counter % 2 === 0;
   };
 
+  finishButton.addEventListener("click", () => {
+    app.toggleGameContainer();
+    app.toggleResultsContainer();
+  });
+
+  restartButton.addEventListener("click", () => {
+    app.toggleResultsContainer();
+    app.toggleStartContainer();
+  });
+
   resetButton.addEventListener("click", () => {
-    resetButton.classList.toggle("hidden");
+    app.toggleResetButton();
     resetBoard();
     resetActivated = false;
   });
@@ -150,19 +221,19 @@ const game = ((player1, player2) => {
           displayUnit(cell, result);
           if (evaluateBoard() === "tie") {
             gameInfo.textContent = `its a tie`;
-            resetButton.classList.toggle("hidden");
+            app.toggleResetButton();
             resetActivated = true;
           } else if (evaluateBoard() === true) {
             gameInfo.textContent = `${player1.name} is winner`;
             player1.addScore();
             player1score.textContent = player1.score;
-            resetButton.classList.toggle("hidden");
+            app.toggleResetButton();
             resetActivated = true;
           } else if (evaluateBoard() === false) {
             gameInfo.textContent = `${player2.name} is winner`;
             player2.addScore();
             player2score.textContent = player2.score;
-            resetButton.classList.toggle("hidden");
+            app.toggleResetButton();
             resetActivated = true;
           }
         }
@@ -174,17 +245,16 @@ const game = ((player1, player2) => {
     for (let i = 0; i < gameBoard.length; i++) {
       const cell = document.createElement("button");
       cell.setAttribute("id", `cell-${i}`);
-      container.appendChild(cell);
+      gameboardContainer.appendChild(cell);
       attachCellEvent(i, cell);
     }
   };
-
   createCells();
 
   const destroyCells = () => {
     for (let i = 0; i < gameBoard.length; i++) {
       const cell = document.querySelector(`#cell-${i}`);
-      container.removeChild(cell);
+      gameboardContainer.removeChild(cell);
     }
   };
 
@@ -194,10 +264,4 @@ const game = ((player1, player2) => {
     createCells();
     gameInfo.textContent = "";
   };
-
-  return {
-    getGameBoard() {
-      console.table(gameBoard);
-    },
-  };
-})(dave, john);
+}

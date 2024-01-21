@@ -16,15 +16,58 @@
     <link href="./style.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="player-one-section" class="player-section">
-      <p class="score">0</p>
+    <div id="start-game">
+      <h2>Player 1</h2>
+      <input
+        type="text"
+        placeholder="Enter name"
+        class="player-one-input-name"
+      />
+      <input
+        type="text"
+        placeholder="Enter figure"
+        class="player-one-input-figure"
+      />
+      <input
+        type="text"
+        placeholder="Enter color"
+        class="player-one-input-color"
+      />
+
+      <h2>Player 2</h2>
+      <input
+        type="text"
+        placeholder="Enter name"
+        class="player-two-input-name"
+      />
+      <input
+        type="text"
+        placeholder="Enter figure"
+        class="player-two-input-figure"
+      />
+      <input
+        type="text"
+        placeholder="Enter color"
+        class="player-two-input-color"
+      />
+      <button id="start-game-button">Start game</button>
     </div>
-    <div id="gameboard"></div>
-    <button id="reset-button" class="hidden">Reset</button>
-    <div id="player-two-section" class="player-section">
-      <p id="game-info"></p>
-      <p class="score">0</p>
+    <div id="main-game" class="hidden">
+      <div id="player-one-section" class="player-section">
+        <p class="score">0</p>
+      </div>
+      <div id="gameboard"></div>
+      <button id="reset-button" class="hidden">Reset</button>
+      <div id="player-two-section" class="player-section">
+        <p id="game-info"></p>
+        <p class="score">0</p>
+      </div>
+      <button id="finish-button">Finish</button>
     </div>
-    <button id="finish-button">Finish</button>
+    <div id="game-results" class="hidden">
+      <p id="player-one-results">Player 1 has this many points</p>
+      <p id="player-two-results">Player 2 has this many points</p>
+      <button id="restart-button">Restart</button>
+    </div>
   </body>
 </html>
