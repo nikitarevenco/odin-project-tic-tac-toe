@@ -19,7 +19,8 @@ button {
   display: none;
 }
 
-#reset-button {
+#reset-button,
+#finish-button {
   height: 100px;
   width: 250px;
 }

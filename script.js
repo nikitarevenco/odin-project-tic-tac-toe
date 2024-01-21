@@ -1,12 +1,31 @@
-const game = (() => {
+function createPlayer(figure, color, name) {
+  return {
+    name,
+    figure,
+    color,
+    score: 0,
+    addScore() {
+      return ++this.score;
+    },
+  };
+}
+
+const dave = createPlayer("x", "green", "Dave");
+const john = createPlayer("o", "red", "John");
+
+const game = ((player1, player2) => {
   // player 1 is true, player 2 is false
-  const playerOneSymbol = "x";
-  const playerTwoSymbol = "o";
+  const finishButton = document.querySelector(`#finish-button`);
+  const playerOneSymbol = player1.figure;
+  const playerTwoSymbol = player2.figure;
   let gameBoard = new Array(9);
   const container = document.querySelector("#gameboard");
   let counter = 0;
   const gameInfo = document.querySelector(`#game-info`);
   const resetButton = document.querySelector(`#reset-button`);
+  let resetActivated = false;
+  const player1score = document.querySelector(`#player-two-section > .score`);
+  const player2score = document.querySelector(`#player-one-section > .score`);
 
   const addUnit = (id, bool) => {
     gameBoard[id] = bool;
@@ -119,58 +138,66 @@ const game = (() => {
   resetButton.addEventListener("click", () => {
     resetButton.classList.toggle("hidden");
     resetBoard();
+    resetActivated = false;
   });
 
   const attachCellEvent = (id, cell) => {
     cell.addEventListener("click", () => {
-      const result = evaluateCounter();
-      if (gameBoard.at(id) === undefined) {
-        addUnit(id, result);
-        displayUnit(cell, result);
-        if (evaluateBoard() === "tie") {
-          gameInfo.textContent = "its a tie";
-          resetButton.classList.toggle("hidden");
-        } else if (evaluateBoard() === true) {
-          gameInfo.textContent = "x is winner";
-          resetButton.classList.toggle("hidden");
-        } else if (evaluateBoard() === false) {
-          gameInfo.textContent = "o is winner";
-          resetButton.classList.toggle("hidden");
+      if (!resetActivated) {
+        const result = evaluateCounter();
+        if (gameBoard.at(id) === undefined) {
+          addUnit(id, result);
+          displayUnit(cell, result);
+          if (evaluateBoard() === "tie") {
+            gameInfo.textContent = `its a tie`;
+            resetButton.classList.toggle("hidden");
+            resetActivated = true;
+          } else if (evaluateBoard() === true) {
+            gameInfo.textContent = `${player1.name} is winner`;
+            player1.addScore();
+            player1score.textContent = player1.score;
+            resetButton.classList.toggle("hidden");
+            resetActivated = true;
+          } else if (evaluateBoard() === false) {
+            gameInfo.textContent = `${player2.name} is winner`;
+            player2.addScore();
+            player2score.textContent = player2.score;
+            resetButton.classList.toggle("hidden");
+            resetActivated = true;
+          }
         }
       }
     });
   };
 
+  const createCells = () => {
+    for (let i = 0; i < gameBoard.length; i++) {
+      const cell = document.createElement("button");
+      cell.setAttribute("id", `cell-${i}`);
+      container.appendChild(cell);
+      attachCellEvent(i, cell);
+    }
+  };
+
+  createCells();
+
+  const destroyCells = () => {
+    for (let i = 0; i < gameBoard.length; i++) {
+      const cell = document.querySelector(`#cell-${i}`);
+      container.removeChild(cell);
+    }
+  };
+
+  const resetBoard = () => {
+    gameBoard.fill(undefined);
+    destroyCells();
+    createCells();
+    gameInfo.textContent = "";
+  };
+
   return {
-    createCells() {
-      for (let i = 0; i < gameBoard.length; i++) {
-        const cell = document.createElement("button");
-        cell.setAttribute("id", `cell-${i}`);
-        container.appendChild(cell);
-        attachCellEvent(i, cell);
-      }
-    },
-
-    destroyCells() {
-      for (let i = 0; i < gameBoard.length; i++) {
-        const cell = document.querySelector(`#cell-${i}`);
-        container.removeChild(cell);
-      }
-    },
-
-    resetBoard() {
-      gameBoard.fill(undefined);
-      this.destroyCells();
-      this.createCells();
-      gameInfo.textContent = "";
-    },
-
-    // Debugging only
-
     getGameBoard() {
       console.table(gameBoard);
     },
   };
-})();
-
-game.createCells();
+})(dave, john);
