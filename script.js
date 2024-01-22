@@ -7,7 +7,6 @@ const app = (() => {
   // Buttons
   const startGameButton = document.querySelector(`#start-game-button`);
   const resetButton = document.querySelector(`#reset-button`);
-  const finishButton = document.querySelector(`#finish-button`);
   const restartButton = document.querySelector(`#restart-button`);
 
   // TODO: Create factory functions and separate module
@@ -106,16 +105,6 @@ const app = (() => {
     };
   };
 
-  finishButton.addEventListener("click", () => {
-    app.toggleGameContainer();
-    app.toggleResultsContainer();
-  });
-
-  restartButton.addEventListener("click", () => {
-    app.toggleResultsContainer();
-    app.toggleStartContainer();
-  });
-
   startGameButton.addEventListener("click", () => {
     const player1 = createPlayer(
       currentFigure1,
@@ -132,6 +121,11 @@ const app = (() => {
     game(player1, player2);
   });
 
+  restartButton.addEventListener("click", () => {
+    app.toggleResultsContainer();
+    app.toggleStartContainer();
+  });
+
   return {
     toggleStartContainer,
     toggleGameContainer,
@@ -141,8 +135,12 @@ const app = (() => {
 })();
 
 function game(player1, player2) {
+  // Display
+  const player1points = document.querySelector("#player-one-results");
+  const player2points = document.querySelector("#player-two-results");
   // Remove me later
   const resetButton = document.querySelector(`#reset-button`);
+  const finishButton = document.querySelector(`#finish-button`);
   //
   let gameBoard = new Array(9);
   let counter = 0;
@@ -153,6 +151,13 @@ function game(player1, player2) {
   const gameInfo = document.querySelector(`#game-info`);
   const player1score = document.querySelector(`#player-two-section > .score`);
   const player2score = document.querySelector(`#player-one-section > .score`);
+
+  finishButton.addEventListener("click", () => {
+    app.toggleGameContainer();
+    app.toggleResultsContainer();
+    player1points.textContent = `${player1.name}: ${player1.score}`;
+    player2points.textContent = `${player2.name}: ${player2.score}`;
+  });
 
   const addUnit = (id, bool) => {
     gameBoard[id] = bool;
