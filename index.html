@@ -17,41 +17,49 @@
   </head>
   <body>
     <div id="start-game">
-      <h2>Player 1</h2>
-      <input
-        type="text"
-        placeholder="Enter name"
-        class="player-one-input-name"
-      />
-      <input
-        type="text"
-        placeholder="Enter figure"
-        class="player-one-input-figure"
-      />
-      <input
-        type="text"
-        placeholder="Enter color"
-        class="player-one-input-color"
-      />
-
-      <h2>Player 2</h2>
-      <input
-        type="text"
-        placeholder="Enter name"
-        class="player-two-input-name"
-      />
-      <input
-        type="text"
-        placeholder="Enter figure"
-        class="player-two-input-figure"
-      />
-      <input
-        type="text"
-        placeholder="Enter color"
-        class="player-two-input-color"
-      />
-      <button id="start-game-button">Start game</button>
+      <section id="randomise">
+        <img src="https://gilkalai.files.wordpress.com/2017/09/dice.png" />
+        <p>Randomize</p>
+      </section>
+      <section id="player1-startup" class="player-startup">
+        <img
+          src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+        />
+        <ul class="figure-choice player1">
+          <button id="figure-o" class="figure1">O</button>
+          <button id="figure-x" class="figure1">X</button>
+          <button id="figure-z" class="figure1">Z</button>
+          <button id="figure-l" class="figure1">L</button>
+        </ul>
+        <input type="text" placeholder="Player 1 name" />
+        <ul class="color-choice player1">
+          <button id="color-blue" class="color1">Blue</button>
+          <button id="color-red" class="color1">Red</button>
+          <button id="color-yellow" class="color1">Yellow</button>
+          <button id="color-green" class="color1">Green</button>
+        </ul>
+      </section>
+      <section id="player2-startup" class="player-startup">
+        <img
+          src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+        />
+        <ul class="figure-choice player2">
+          <button id="figure-o" class="figure2">O</button>
+          <button id="figure-x" class="figure2">X</button>
+          <button id="figure-z" class="figure2">Z</button>
+          <button id="figure-l" class="figure2">L</button>
+        </ul>
+        <input type="text" placeholder="Player 1 name" />
+        <ul class="color-choice player2">
+          <button id="color-blue" class="color2">Blue</button>
+          <button id="color-red" class="color2">Red</button>
+          <button id="color-yellow" class="color2">Yellow</button>
+          <button id="color-green" class="color2">Green</button>
+        </ul>
+      </section>
+      <button id="start-game-button">START</button>
     </div>
+
     <div id="main-game" class="hidden">
       <div id="player-one-section" class="player-section">
         <p class="score">0</p>

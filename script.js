@@ -7,18 +7,78 @@ const app = (() => {
   // Buttons
   const startGameButton = document.querySelector(`#start-game-button`);
   const resetButton = document.querySelector(`#reset-button`);
+  const finishButton = document.querySelector(`#finish-button`);
+  const restartButton = document.querySelector(`#restart-button`);
+
+  let currentFigure1;
+  let currentFigure2;
+  const figureArray = ["o", "x", "z", "l", "o", "x", "z", "l"];
+
+  for (let i = 0; i < figureArray.length; i++) {
+    let playerNumber = Math.ceil(i / 3.99);
+    if (playerNumber === 0) {
+      playerNumber++;
+    }
+    const domFigure = document.querySelector(
+      `.player${playerNumber} #figure-${figureArray[i]}`
+    );
+    console.log(domFigure, playerNumber, i);
+    domFigure.addEventListener("click", () => {
+      if (i < 4) {
+        currentFigure1 = `${figureArray[i]}`;
+      } else {
+        currentFigure2 = `${figureArray[i]}`;
+      }
+      const domFigureSiblingsArray = Array.from(
+        document.querySelectorAll(`.figure${playerNumber}`)
+      );
+      for (const button of domFigureSiblingsArray) {
+        button.classList.remove("highlight");
+      }
+      domFigure.classList.add("highlight");
+    });
+  }
+
+  let currentColor1;
+  let currentColor2;
+  const colorArray = [
+    "blue",
+    "red",
+    "yellow",
+    "green",
+    "blue",
+    "red",
+    "yellow",
+    "green",
+  ];
+
+  for (let i = 0; i < colorArray.length; i++) {
+    let playerNumber = Math.ceil(i / 3.99);
+    if (playerNumber === 0) {
+      playerNumber++;
+    }
+    const domColor = document.querySelector(
+      `.player${playerNumber} #color-${colorArray[i]}`
+    );
+    domColor.addEventListener("click", () => {
+      if (i < 4) {
+        currentColor1 = `${colorArray[i]}`;
+      } else {
+        currentColor2 = `${colorArray[i]}`;
+      }
+      const domColorSiblingsArray = Array.from(
+        document.querySelectorAll(`.color${playerNumber}`)
+      );
+      for (const button of domColorSiblingsArray) {
+        button.classList.remove("highlight");
+      }
+      domColor.classList.add("highlight");
+    });
+  }
 
   // User inputs
   const playerOneNameInput = document.querySelector(`.player-one-input-name`);
-  const playerOneColorInput = document.querySelector(`.player-one-input-color`);
-  const playerOneFigureInput = document.querySelector(
-    `.player-one-input-figure`
-  );
   const playerTwoNameInput = document.querySelector(`.player-two-input-name`);
-  const playerTwoColorInput = document.querySelector(`.player-two-input-color`);
-  const playerTwoFigureInput = document.querySelector(
-    `.player-two-input-figure`
-  );
 
   const toggleResetButton = () => {
     resetButton.classList.toggle("hidden");
@@ -45,6 +105,16 @@ const app = (() => {
       },
     };
   };
+
+  finishButton.addEventListener("click", () => {
+    app.toggleGameContainer();
+    app.toggleResultsContainer();
+  });
+
+  restartButton.addEventListener("click", () => {
+    app.toggleResultsContainer();
+    app.toggleStartContainer();
+  });
 
   startGameButton.addEventListener("click", () => {
     const player1 = createPlayer(
@@ -76,16 +146,13 @@ function game(player1, player2) {
   //
   let gameBoard = new Array(9);
   let counter = 0;
+  let resetActivated = false;
 
   // player 1 is true, player 2 is false
-  const finishButton = document.querySelector(`#finish-button`);
   const gameboardContainer = document.querySelector("#gameboard");
   const gameInfo = document.querySelector(`#game-info`);
-
-  let resetActivated = false;
   const player1score = document.querySelector(`#player-two-section > .score`);
   const player2score = document.querySelector(`#player-one-section > .score`);
-  const restartButton = document.querySelector(`#restart-button`);
 
   const addUnit = (id, bool) => {
     gameBoard[id] = bool;
@@ -195,16 +262,6 @@ function game(player1, player2) {
   const evaluateCounter = () => {
     return counter % 2 === 0;
   };
-
-  finishButton.addEventListener("click", () => {
-    app.toggleGameContainer();
-    app.toggleResultsContainer();
-  });
-
-  restartButton.addEventListener("click", () => {
-    app.toggleResultsContainer();
-    app.toggleStartContainer();
-  });
 
   resetButton.addEventListener("click", () => {
     app.toggleResetButton();

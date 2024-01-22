@@ -4,33 +4,98 @@
   padding: 0;
 }
 
-#gameboard {
-  display: grid;
-  height: 250px;
-  width: 250px;
-  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-}
-
-button {
-  font-size: 3rem;
-}
-
 .hidden {
   display: none;
 }
 
-#reset-button,
-#finish-button {
-  height: 100px;
-  width: 250px;
+/* body {
+  height: 100vh;
+} */
+
+/* START UP */
+
+ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.player-section {
-  height: 250px;
-  width: 250px;
-  background-color: #cccccc;
+body {
+  font-size: 2rem;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  height: 50px;
+  width: auto;
+}
+
+#start-game {
+  min-width: 700px;
+  max-width: 1000px;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr repeat(2, 3fr) 1fr;
+  gap: 15px;
+}
+
+#randomise {
+  display: flex;
+  flex-direction: row;
+}
+
+.player-startup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "pfp figure-choice color-choice"
+    "pfp input color-choice";
+}
+
+section {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+}
+
+ul button {
+  height: 30px;
+  width: 100px;
+  font-size: 1.43rem;
+}
+
+.highlight {
+  background-color: green;
+}
+
+#start-game-button {
+  font-size: 3rem;
+}
+
+.player-startup > img {
+  height: 250px;
+  width: auto;
+  grid-area: pfp;
+}
+.player-startup > h1 {
+  grid-area: h1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.player-startup > input {
+  grid-area: input;
+  height: 100px;
+  font-size: 2rem;
+}
+.player-startup > .color-choice {
+  grid-area: color-choice;
+}
+.player-startup > .figure-choice {
+  grid-area: figure-choice;
 }
