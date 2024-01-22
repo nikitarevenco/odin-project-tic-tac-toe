@@ -24,9 +24,13 @@ ul {
 
 body {
   font-size: 2rem;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+}
+
+button {
+  font-size: 2rem;
 }
 
 img {
@@ -43,7 +47,7 @@ img {
   gap: 15px;
 }
 
-#randomise {
+#randomize {
   display: flex;
   flex-direction: row;
 }
@@ -61,6 +65,11 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+article img {
+  height: 250px;
+  width: 250px;
 }
 
 ul button {
@@ -104,13 +113,41 @@ ul button {
 #main-game {
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100%;
 }
 
 #main-game-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr;
   width: 100%;
+  gap: 90px;
+}
+
+@media only screen and (min-width: 1280px) {
+  #main-game-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.buttons {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: min(5%, 90px);
+  width: 100vw;
+}
+
+.buttons button {
+  height: 80%;
+  width: 450px;
+}
+
+#main-game article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #main-game > #finish-button {
@@ -122,12 +159,20 @@ ul button {
   flex-direction: column;
 }
 
+#game-info {
+  text-align: center;
+}
+
 #gameboard {
-  height: 250px;
-  width: 250px;
+  height: auto;
+  width: 100%;
+  display: grid;
+  grid-template: repeat(3, 150px) / repeat(3, 150px);
+  place-content: center;
 }
 
 #gameboard > button {
-  height: 10%;
-  width: 10%;
+  height: 100%;
+  width: 100%;
+  /* font-size: 10rem; */
 }

@@ -8,6 +8,7 @@ const app = (() => {
   const startGameButton = document.querySelector(`#start-game-button`);
   const resetButton = document.querySelector(`#reset-button`);
   const restartButton = document.querySelector(`#restart-button`);
+  const randomizeButton = document.querySelector(`#randomize`);
 
   // TODO: Create factory functions and separate module
   let currentFigure1;
@@ -104,6 +105,8 @@ const app = (() => {
       },
     };
   };
+
+  // randomizeButton.addEventListener("click", () => {});
 
   startGameButton.addEventListener("click", () => {
     const player1 = createPlayer(
