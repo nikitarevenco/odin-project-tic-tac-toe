@@ -10,6 +10,7 @@ const app = (() => {
   const finishButton = document.querySelector(`#finish-button`);
   const restartButton = document.querySelector(`#restart-button`);
 
+  // TODO: Create factory functions and separate module
   let currentFigure1;
   let currentFigure2;
   const figureArray = ["o", "x", "z", "l", "o", "x", "z", "l"];
@@ -22,7 +23,6 @@ const app = (() => {
     const domFigure = document.querySelector(
       `.player${playerNumber} #figure-${figureArray[i]}`
     );
-    console.log(domFigure, playerNumber, i);
     domFigure.addEventListener("click", () => {
       if (i < 4) {
         currentFigure1 = `${figureArray[i]}`;
@@ -118,16 +118,16 @@ const app = (() => {
 
   startGameButton.addEventListener("click", () => {
     const player1 = createPlayer(
-      playerOneFigureInput.value,
-      playerOneColorInput.value,
+      currentFigure1,
+      currentColor1,
       playerOneNameInput.value
     );
     const player2 = createPlayer(
-      playerTwoFigureInput.value,
-      playerTwoColorInput.value,
+      currentFigure2,
+      currentColor2,
       playerTwoNameInput.value
     );
-    startGameContainer.classList.toggle("hidden");
+    toggleStartContainer();
     toggleGameContainer();
     game(player1, player2);
   });

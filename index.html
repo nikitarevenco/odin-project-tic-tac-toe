@@ -31,7 +31,11 @@
           <button id="figure-z" class="figure1">Z</button>
           <button id="figure-l" class="figure1">L</button>
         </ul>
-        <input type="text" placeholder="Player 1 name" />
+        <input
+          class="player-one-input-name"
+          type="text"
+          placeholder="Player 1 name"
+        />
         <ul class="color-choice player1">
           <button id="color-blue" class="color1">Blue</button>
           <button id="color-red" class="color1">Red</button>
@@ -49,7 +53,11 @@
           <button id="figure-z" class="figure2">Z</button>
           <button id="figure-l" class="figure2">L</button>
         </ul>
-        <input type="text" placeholder="Player 1 name" />
+        <input
+          class="player-two-input-name"
+          type="text"
+          placeholder="Player 2 name"
+        />
         <ul class="color-choice player2">
           <button id="color-blue" class="color2">Blue</button>
           <button id="color-red" class="color2">Red</button>
@@ -61,17 +69,29 @@
     </div>
 
     <div id="main-game" class="hidden">
-      <div id="player-one-section" class="player-section">
-        <p class="score">0</p>
+      <div id="main-game-container">
+        <article id="player-one-section" class="player-section">
+          <img
+            src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+          />
+          <p>Symbol:</p>
+          <h3>Score:</h3>
+        </article>
+        <article id="gameboard"></article>
+        <article id="player-two-section" class="player-section">
+          <img
+            src="https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg"
+          />
+          <p>Symbol:</p>
+          <h3>Score:</h3>
+        </article>
       </div>
-      <div id="gameboard"></div>
-      <button id="reset-button" class="hidden">Reset</button>
-      <div id="player-two-section" class="player-section">
-        <p id="game-info"></p>
-        <p class="score">0</p>
+      <div class="buttons">
+        <button id="reset-button" class="hidden">Reset</button>
+        <button id="finish-button">FINISH</button>
       </div>
-      <button id="finish-button">Finish</button>
     </div>
+
     <div id="game-results" class="hidden">
       <p id="player-one-results">Player 1 has this many points</p>
       <p id="player-two-results">Player 2 has this many points</p>
